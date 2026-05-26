@@ -50,27 +50,3 @@ Default API:
 ```text
 http://localhost:3000/api
 ```
-
-## Default Account
-
-```text
-Username: superadmin
-Email: superadmin@pranata.go.id
-Password: superadmin123
-Role: SUPERADMIN
-```
-
-Ganti password setelah login atau ubah seed untuk environment production.
-
-## Git Safety
-
-File berikut tidak boleh dipush:
-
-```text
-.env
-node_modules/
-dist/
-coverage/
-```
-
-Gunakan `.env.example` sebagai template konfigurasi.
