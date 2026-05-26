@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+
+# Keep environment variables and local generated files out of version control.
+.env
+.env.*
+!.env.example
+
+/generated/prisma

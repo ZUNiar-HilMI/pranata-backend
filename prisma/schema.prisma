@@ -1,0 +1,74 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id              String     @id @default(uuid())
+  username        String     @unique
+  email           String     @unique
+  password        String     // bcrypt hashed
+  fullName        String
+  role            Role       @default(MEMBER)
+  dinasId         String?
+  dinas           Dinas?     @relation(fields: [dinasId], references: [id])
+  isEmailVerified Boolean    @default(false)
+  photoUrl        String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  activities      Activity[]
+}
+
+model Activity {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  budget      Float
+  date        DateTime
+  location    String
+  latitude    Float?
+  longitude   Float?
+  photoBefore String?
+  photoAfter  String?
+  status      Status   @default(PENDING)
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  dinasId     String
+  dinas       Dinas    @relation(fields: [dinasId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Dinas {
+  id          String     @id @default(cuid())
+  name        String
+  code        String     @unique
+  description String     @default("")
+  createdAt   DateTime   @default(now())
+  users       User[]
+  activities  Activity[]
+}
+
+model Setting {
+  id    String @id @default(cuid())
+  key   String @unique
+  value String
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  MEMBER
+}
+
+enum Status {
+  PENDING
+  APPROVED
+  REJECTED
+}
